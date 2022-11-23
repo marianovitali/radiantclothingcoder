@@ -1,0 +1,34 @@
+:root {
+
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%
+}
+  *, *:before, *:after {
+    box-sizing: inherit;
+}
+
+/** Header **/
+
+.header{
+    display: flex;
+    justify-content: center;
+}
+
+.header__logo {
+    margin: 3rem 0;
+}
+
+/** Nav **/
+.navegacion {
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.navegacion__enlace {
+    font-size: 3rem;
+}

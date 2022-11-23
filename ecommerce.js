@@ -1,72 +1,134 @@
 class Product {
-    constructor(id, brand, model, price, stock) {
+    constructor(id, brand, model, price, amount) {
         this.id = id;
         this.brand = brand;
         this.model = model;
         this.price = price;
-        this.stock = stock;
-    };
-    // checkStock(){
-    //     if(this.stock > 0) {
+        this.amount = 1;
+    }
+}
 
-    //     }
-    //     else {
-
-    //     }
-    // }
-};
-
-alert("Welcome to Radiant Clothing Store.");
-
-
-const productList = [];
-const product1 = new Product(1, "Nike", "Sportswear Blue T-shirt", 40, 9);
-productList.push(product1);
+const products = [];
+const product1 = new Product(1, "Nike", "Sportswear Blue T-Shirt", 40, 9);
+products.push(product1);
 const product2 = new Product(2, "Adidas", "Classic Green Jacket", 80, 1);
-productList.push(product2);
+products.push(product2);
 const product3 = new Product(3, "Vans", "Old-School Red Trainers", 70, 16);
-productList.push(product3);
+products.push(product3);
 const product4 = new Product(4, "Puma", "New Wave Orange T-shirt", 30, 10);
-productList.push(product4);
+products.push(product4);
 
-console.log(productList);
-
-let totalPayment = 0;
-let keepBuying = true;
-let decision;
-const showList = `Choose your product \n 1.${product1.brand} ${product1.model} Price $${product1.price} \n 2.${product2.brand} ${product2.model} Price $${product2.price} \n 3.${product3.brand} ${product3.model} Price $${product3.price} \n 4.${product4.brand} ${product4.model} Price $${product4.price}`
-let productSelected = parseInt(prompt(showList));
-let coupon;
-
-while (keepBuying === true) {
-    totalPayment = totalPayment + productList[productSelected-1].price
-    decision = parseInt(prompt("Would you like to buy something else? \n 1. Yes  2. No"))
-    if (decision === 1) {
-        productSelected = parseInt(prompt(showList));
-    }
-    else {
-        keepBuying = false;
-        let couponOption = parseInt(prompt("Your total is $" + totalPayment + " Would you like to use a Coupon? \n 1. Yes 2. No"))
-        if (couponOption === 1) {
-            coupon = prompt("Write your coupon here:");
-            discount(coupon);
-        };
-    };
+let cart = []
+if(localStorage.getItem("cart")) {
+    cart = JSON.parse(localStorage.getItem("cart"));
 };
 
-// get a discount of the total price.
-function discount(coupon) {
-    if (coupon === "10discount") {
-        totalPayment = totalPayment - (totalPayment * (10 / 100));
+const divProducts = document.getElementById("divProducts");
+
+// Method that shows the products.
+
+const showProducts = () => {
+    products.forEach(element => {
+        const card = document.createElement("div");
+        card.classList.add("col-xl-3", "col-md-6", "col-xs-12");
+        card.innerHTML = `
+        <div class="card">
+            <div class="card-body">
+            <h5 class="card-title">${element.brand}, ${element.model}</h5>
+            <p class="card-text"> $${element.price}</p>
+            <button class="btn btn-primary" id="button${element.id}"> Add to cart</button>
+            </div>
+        </div>
+        `
+
+        divProducts.appendChild(card);
+
+        // Add product
+        const button = document.getElementById(`button${element.id}`);
+        button.addEventListener("click", () => {
+            addToCart(element.id)
+        })
+    });
+}
+
+showProducts();
+
+const addToCart = (id) => {
+    const product = products.find((product) => product.id === id);
+    const productCart = cart.find((product) => product.id === id);
+    if (productCart) {
+        productCart.amount++;
+    } else {
+        cart.push(product);
+        localStorage.setItem("cart",JSON.stringify(cart));
     }
+    calculateTotal();
+}
 
-    else if (coupon === "20discount") {
-        totalPayment = totalPayment - (totalPayment * (20 / 100));
+// Cart
 
-    }
-    else {
-        prompt("Your coupon was incorrect! No discount was made.")
-    };
-};
+const divCart = document.getElementById("divCart");
+const showCartButton = document.getElementById("showCartButton");
+showCartButton.addEventListener("click", () => {
+    showCart();
+});
 
-alert(`Your total is $${totalPayment}`);
+const showCart = () => {
+    divCart.innerHTML = "";
+    cart.forEach(element => {
+        const card = document.createElement("div");
+        card.classList.add("col-xl-3", "col-md-6", "col-xs-12");
+        card.innerHTML = `
+        <div class="card">
+            <div class="card-body">
+            <h5 class="card-title">${element.brand}, ${element.model}</h5>
+            <p class="card-text"> $${element.price}</p>
+            <p class="card-text"> ${element.amount}</p>
+            <button class="btn btn-primary" id="delete${element.id}"> Delete product</button>
+            </div>
+        </div>
+        `
+        divCart.appendChild(card);
+        const button = document.getElementById(`delete${element.id}`)
+        button.addEventListener("click", () => {
+            deleteFromCart(element.id);
+        })
+    });
+
+    calculateTotal();
+}
+
+// Method that deletes a specific product.
+const deleteFromCart = (id) => {
+    const product = cart.find((product) => product.id == id);
+    const index = cart.indexOf(product);
+    cart.splice(index, 1);
+    showCart();
+    localStorage.setItem("cart", JSON.stringify(cart)); 
+}
+
+const clearCart = document.getElementById("clearCartButton");
+clearCart.addEventListener("click", () => {
+    deleteAllProducts();
+})
+
+
+// Method that deletes all products inside the cart.
+
+const deleteAllProducts = () => {
+    cart = [];
+    showCart();
+    localStorage.clear();
+}
+
+
+// Show messege about your purchase.
+
+const total = document.getElementById("total");
+const calculateTotal = () => {
+    let totalPayment = 0;
+    cart.forEach((element) => {
+        totalPayment += element.price * element.amount;
+    })
+    total.innerHTML = `TOTAL: $${totalPayment}`;
+}
