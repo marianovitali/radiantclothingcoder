@@ -1,0 +1,14 @@
+[
+    {"id":1, "brand": "GVNG", "model": "Anorak (Lightblue and Pink)", "price": 140, "img": "img/gvngswanorak.png", "amount": 1},
+    {"id":2, "brand": "GVNG", "model": "Anorak (White and Orange)", "price": 130, "img": "img/gvngswanorak2.png", "amount": 1 },
+    {"id":3, "brand": "BASTARD", "model": "Hoodie (Black)", "price": 150, "img": "img/hoodiebastard.png", "amount": 1},
+    {"id":4, "brand": "TYLER", "model": "Hoodie Tyler The Creator (Black)", "price": 190, "img": "img/hoodietyler.png", "amount": 1},
+    {"id":5, "brand": "Levis", "model": "Jeans Unisex Summer (Blue)", "price": 140, "img": "img/pantsblue.png", "amount": 1},
+    {"id":6, "brand": "Levis", "model": "Jeans Unisex Summer (Grey)", "price": 120, "img": "img/pantsummer.png", "amount": 1},
+    {"id":7, "brand": "2pac", "model": "T-Shirt 2pac All Eyes On Me", "price": 80, "img": "img/remera2pac.png", "amount": 1},
+    {"id":8, "brand": "Cross Clothing", "model": "T-Shirt Cross (White)", "price": 70, "img": "img/remeracross.png", "amount": 1},
+    {"id":9, "brand": "Notorious", "model": "T-shirt BIGGIE", "price": 80, "img": "img/remeranotorious.png", "amount": 1},
+    {"id":10, "brand": "A$AP", "model": "T-SHIRT A$AP ROCKY", "price": 60, "img": "img/remerarocky.png", "amount": 1},
+    {"id":11, "brand": "BASTARD", "model": "Shorts Bastard (Black)", "price": 90, "img": "img/shortbastard.png", "amount": 1},
+    {"id":12, "brand": "Loop", "model": "Shorts LoopCompany (Black)", "price": 100, "img": "img/shortloopcompany.png", "amount": 1}
+]
